@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">CataractAction</string>
+    <string name="page_1_title">Analyze Your Eyes</string>
+    <string name="page_1_body">You can help identify early signs of eye diseases such as glaucoma or cataracts.</string>
+    <string name="page_2_title">Scan With Image</string>
+    <string name="page_2_body">Scanning your eye with an imaging device can help detect eye diseases in their early stages.</string>
+    <string name="page_3_title">Find The Result</string>
+    <string name="page_3_body">Your eye scan results can indicate if you have any eye diseases or conditions that require treatment.</string>
+    <string name="register_title">Create an account</string>
+    <string name="register_body">Please put your information below to create a new account for using app.</string>
+    <string name="login_name">Name</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_password">Password</string>
+    <string name="login_title">Welcome back!</string>
+    <string name="login_body">Please enter your details below to start using app.</string>
+    <string name="home">Home</string>
+    <string name="article">Article</string>
+    <string name="history">History</string>
+    <string name="profile">Profile</string>
 </resources>

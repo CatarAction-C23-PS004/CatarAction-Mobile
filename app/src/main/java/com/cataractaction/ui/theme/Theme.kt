@@ -7,15 +7,20 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 private val DarkColorScheme = darkColors(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    primaryVariant = Pink80
+    primary = Blue,
+    primaryVariant = GreyLight,
+    secondary = Grey,
+    secondaryVariant = GreyDark,
+    onError = RedDark
 )
 
 private val LightColorScheme = lightColors(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    primaryVariant = Pink40
+    primary = Blue,
+    primaryVariant = GreyLight,
+    secondary = Grey,
+    secondaryVariant = GreyDark,
+    onError = RedDark
+
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -32,7 +37,6 @@ private val LightColorScheme = lightColors(
 fun CataractActionTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {
