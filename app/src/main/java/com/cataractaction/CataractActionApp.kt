@@ -15,6 +15,7 @@ import com.cataractaction.ui.common.keyboardAsState
 import com.cataractaction.ui.components.main.BottomBar
 import com.cataractaction.ui.navigation.Screen
 import com.cataractaction.ui.screen.article.ArticleScreen
+import com.cataractaction.ui.screen.cataractcheck.CataractCheckScreen
 import com.cataractaction.ui.screen.history.HistoryScreen
 import com.cataractaction.ui.screen.home.HomeScreen
 import com.cataractaction.ui.screen.login.LoginScreen
@@ -39,6 +40,7 @@ fun CataractActionApp(
                         BottomBar(navHostController, currentRoute)
                     }
                 }
+
                 Screen.History.route -> BottomBar(navHostController, currentRoute)
                 Screen.Profile.route -> BottomBar(navHostController, currentRoute)
             }
@@ -66,7 +68,9 @@ fun CataractActionApp(
                 })
             }
             composable(Screen.Home.route) {
-                HomeScreen()
+                HomeScreen(navigatetoCheck = {
+                    navHostController.navigate(Screen.CataractCheckScreen.route)
+                })
             }
             composable(Screen.Article.route) {
                 ArticleScreen()
@@ -76,6 +80,9 @@ fun CataractActionApp(
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()
+            }
+            composable(Screen.CataractCheckScreen.route) {
+                CataractCheckScreen()
             }
         }
     }

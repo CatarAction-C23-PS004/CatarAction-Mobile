@@ -17,7 +17,7 @@ import com.cataractaction.ui.components.home.LogoNotif
 import com.cataractaction.ui.components.main.CardArticle
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navigatetoCheck: () -> Unit) {
     val list = listOf(1, 2, 3, 4, 5, 6)
     Column(
         modifier = Modifier
@@ -26,7 +26,7 @@ fun HomeScreen() {
     ) {
         LogoNotif()
         Spacer(Modifier.size(24.dp))
-        DashboardHome()
+        DashboardHome(navigatetoCheck)
         Spacer(Modifier.size(30.dp))
         Text(
             text = "Recommended Article",
