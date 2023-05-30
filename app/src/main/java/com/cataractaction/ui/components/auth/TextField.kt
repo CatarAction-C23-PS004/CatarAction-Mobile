@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -31,14 +32,16 @@ import com.cataractaction.R
 
 @Composable
 fun TextFieldName() {
+    var name by rememberSaveable { mutableStateOf("") }
+
     Text(
         text = stringResource(R.string.login_name),
         style = MaterialTheme.typography.h5.copy(fontSize = 14.sp),
         modifier = Modifier.padding(bottom = 1.dp)
     )
     OutlinedTextField(
-        value = "",
-        onValueChange = {},
+        value = name,
+        onValueChange = { name = it },
         label = {
             Text(
                 "Enter your name",
@@ -56,15 +59,17 @@ fun TextFieldName() {
 }
 
 @Composable
-fun TextFieldEmail(){
+fun TextFieldEmail() {
+    var email by rememberSaveable { mutableStateOf("") }
+
     Text(
         text = stringResource(R.string.auth_email),
         style = MaterialTheme.typography.h5.copy(fontSize = 14.sp),
         modifier = Modifier.padding(bottom = 1.dp)
     )
     OutlinedTextField(
-        value = "",
-        onValueChange = {},
+        value = email,
+        onValueChange = { email = it },
         label = {
             Text(
                 "Enter your email address",
@@ -82,7 +87,7 @@ fun TextFieldEmail(){
 }
 
 @Composable
-fun TextFieldPassword(){
+fun TextFieldPassword() {
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     Text(

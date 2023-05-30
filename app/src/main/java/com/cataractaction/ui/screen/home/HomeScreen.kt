@@ -17,16 +17,20 @@ import com.cataractaction.ui.components.home.LogoNotif
 import com.cataractaction.ui.components.main.CardArticle
 
 @Composable
-fun HomeScreen(navigatetoCheck: () -> Unit) {
+fun HomeScreen(
+    navigateToCheck: () -> Unit,
+    navigateToComing: () -> Unit,
+    navigateToHistory: () -> Unit
+) {
     val list = listOf(1, 2, 3, 4, 5, 6)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 27.dp)
     ) {
-        LogoNotif()
+        LogoNotif(navigateToComing)
         Spacer(Modifier.size(24.dp))
-        DashboardHome(navigatetoCheck)
+        DashboardHome(navigateToCheck, navigateToHistory)
         Spacer(Modifier.size(30.dp))
         Text(
             text = "Recommended Article",

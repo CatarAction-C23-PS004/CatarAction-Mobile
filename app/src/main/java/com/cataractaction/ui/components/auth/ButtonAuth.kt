@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.dp
 import com.cataractaction.R
 
 @Composable
-fun ButtonAuth(register: Boolean) {
+fun ButtonAuth(register: Boolean, navigateToHome: () -> Unit) {
     Button(
-        onClick = { /*TODO*/ }, modifier = Modifier
+        onClick = { navigateToHome() }, modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 15.dp), shape = RoundedCornerShape(60.dp)
     ) {

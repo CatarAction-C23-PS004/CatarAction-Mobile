@@ -39,7 +39,7 @@ import com.cataractaction.ui.components.main.CardArticle
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ArticleScreen() {
+fun ArticleScreen(navigateToComing: () -> Unit) {
     val list = listOf("1", "2", "3")
     val pagerState = rememberPagerState()
 
@@ -48,7 +48,7 @@ fun ArticleScreen() {
             .fillMaxSize()
             .padding(horizontal = 27.dp)
     ) {
-        LogoTitleArticle()
+        LogoTitleArticle(navigateToComing)
         Spacer(Modifier.size(20.dp))
         SearchField()
         Spacer(Modifier.size(21.dp))

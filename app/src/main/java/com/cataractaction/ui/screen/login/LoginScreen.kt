@@ -21,7 +21,7 @@ import com.cataractaction.ui.components.auth.TextFieldPassword
 import com.cataractaction.ui.components.auth.TextTitle
 
 @Composable
-fun LoginScreen(navigate: () -> Unit) {
+fun LoginScreen(navigate: () -> Unit, navigateToHome: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,11 +34,11 @@ fun LoginScreen(navigate: () -> Unit) {
             Spacer(Modifier.size(14.dp))
             TextFieldPassword()
             Spacer(Modifier.size(30.dp))
-            ButtonAuth(false)
+            ButtonAuth(false, navigateToHome)
             DividerAuth()
             ButtonAuthGoogle(false)
             Spacer(Modifier.size(5.dp))
-            TextAuth(navigate,false)
+            TextAuth(navigate, false)
             Spacer(Modifier.size(25.dp))
         }
     }

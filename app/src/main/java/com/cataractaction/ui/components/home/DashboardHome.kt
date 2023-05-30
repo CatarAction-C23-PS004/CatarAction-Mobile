@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.cataractaction.R
 
 @Composable
-fun DashboardHome(navigateToCheck: () -> Unit) {
+fun DashboardHome(navigateToCheck: () -> Unit, navigateToHistory: () -> Unit) {
     Row {
         Image(
             painter = painterResource(R.drawable.home_doctor),
@@ -69,7 +69,7 @@ fun DashboardHome(navigateToCheck: () -> Unit) {
             }
             Spacer(Modifier.size(8.dp))
             OutlinedButton(
-                onClick = {},
+                onClick = {navigateToHistory()},
                 shape = RoundedCornerShape(60.dp),
                 border = BorderStroke(1.dp, MaterialTheme.colors.primary),
                 colors = ButtonDefaults.buttonColors(

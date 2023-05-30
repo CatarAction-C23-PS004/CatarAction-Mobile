@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -17,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LogoTitleArticle() {
+fun LogoTitleArticle(navigateToComing: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -27,10 +28,12 @@ fun LogoTitleArticle() {
     ) {
         Spacer(Modifier.size(0.dp))
         Text(text = "Article", style = MaterialTheme.typography.h5)
-        Icon(
-            imageVector = Icons.Filled.FavoriteBorder,
-            contentDescription = "favorite",
-            tint = MaterialTheme.colors.primary
-        )
+        IconButton(onClick = { navigateToComing()}) {
+            Icon(
+                imageVector = Icons.Filled.FavoriteBorder,
+                contentDescription = "favorite",
+                tint = MaterialTheme.colors.primary
+            )
+        }
     }
 }
