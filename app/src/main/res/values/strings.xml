@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CataractAction</string>
+    <string name="app_name">CatarAction</string>
     <string name="page_1_title">Analyze Your Eyes</string>
     <string name="page_1_body">You can help identify early signs of eye diseases such as glaucoma or cataracts.</string>
     <string name="page_2_title">Scan With Image</string>
