@@ -10,6 +10,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.cataractaction.ui.components.auth.ButtonAuth
 import com.cataractaction.ui.components.auth.ButtonAuthGoogle
 import com.cataractaction.ui.components.auth.DividerAuth
@@ -19,9 +21,14 @@ import com.cataractaction.ui.components.auth.TextFieldEmail
 import com.cataractaction.ui.components.auth.TextFieldName
 import com.cataractaction.ui.components.auth.TextFieldPassword
 import com.cataractaction.ui.components.auth.TextTitle
+import com.cataractaction.ui.navigation.Screen
+
 
 @Composable
-fun RegisterScreen(navigate: () -> Unit, navigateToHome: () -> Unit) {
+fun RegisterScreen(
+    navHostController: NavHostController,
+    onSignInClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,11 +43,20 @@ fun RegisterScreen(navigate: () -> Unit, navigateToHome: () -> Unit) {
             Spacer(Modifier.size(14.dp))
             TextFieldPassword()
             Spacer(Modifier.size(30.dp))
-            ButtonAuth(true, navigateToHome)
+            ButtonAuth(true) {
+                navHostController.popBackStack()
+                navHostController.navigate(Screen.Home.route) {
+                    popUpTo(navHostController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
             DividerAuth()
-            ButtonAuthGoogle(true)
+            ButtonAuthGoogle(true) { onSignInClick() }
             Spacer(Modifier.size(5.dp))
-            TextAuth(navigate, true)
+            TextAuth(true) { navHostController.navigate(Screen.Login.route) }
             Spacer(Modifier.size(25.dp))
         }
     }

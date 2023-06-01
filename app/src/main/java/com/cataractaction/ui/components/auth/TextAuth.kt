@@ -11,13 +11,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun TextAuth(navigate: () -> Unit, register: Boolean) {
+fun TextAuth(register: Boolean, navigate: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        Text(text = if (register) "Already have an account ?" else "Don’t have an account ?", style = MaterialTheme.typography.body2)
+        Text(
+            text = if (register) "Already have an account ?" else "Don’t have an account ?",
+            style = MaterialTheme.typography.body2
+        )
         Text(
             text = if (register) " Sign In" else " Sign Up",
             style = MaterialTheme.typography.body2,

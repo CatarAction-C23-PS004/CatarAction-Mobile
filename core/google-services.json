@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "115129770248",
+    "project_id": "cataractaction",
+    "storage_bucket": "cataractaction.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115129770248:android:a1fc1d90db503eb2934cbd",
+        "android_client_info": {
+          "package_name": "com.cataractaction.core"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115129770248-cpuk9t9f9f1jne7qaql2o3u73m4qiasb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cataractaction",
+            "certificate_hash": "03d0ad47fd9cf41f7589cd8d634fa5348b42de07"
+          }
+        },
+        {
+          "client_id": "115129770248-vnskfiie0785s2qsok4v1eboshp9u7ug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPqersW7jxSuvte1DRNZU8dfFzvFzfZAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115129770248-vnskfiie0785s2qsok4v1eboshp9u7ug.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

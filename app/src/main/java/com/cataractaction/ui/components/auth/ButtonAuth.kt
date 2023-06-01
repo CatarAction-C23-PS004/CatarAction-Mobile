@@ -37,9 +37,9 @@ fun ButtonAuth(register: Boolean, navigateToHome: () -> Unit) {
 }
 
 @Composable
-fun ButtonAuthGoogle(register: Boolean) {
+fun ButtonAuthGoogle(register: Boolean, onSignInClick: () -> Unit) {
     OutlinedButton(
-        onClick = { /*TODO*/ }, modifier = Modifier
+        onClick = { onSignInClick() }, modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 15.dp),
         shape = RoundedCornerShape(60.dp),

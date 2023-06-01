@@ -9,17 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import com.cataractaction.core.domain.model.UserData
 
 @Composable
-fun NameProfile() {
+fun NameProfile(name: String, email: String) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Cupa Alexander Lukesky",
+            text = name,
             style = MaterialTheme.typography.body1,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Text(
-            text = "@cupacupalukeskyy@gmail.com",
+            text = email,
             style = MaterialTheme.typography.body1.copy(fontSize = 12.sp),
             modifier = Modifier.align(Alignment.CenterHorizontally),
             color = MaterialTheme.colors.primaryVariant

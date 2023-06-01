@@ -1,10 +1,20 @@
 package com.cataractaction
 
+import android.app.Activity
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -23,15 +33,79 @@ import com.cataractaction.ui.screen.home.HomeScreen
 import com.cataractaction.ui.screen.login.LoginScreen
 import com.cataractaction.ui.screen.pager.PagerScreen
 import com.cataractaction.ui.screen.profile.ProfileScreen
+import com.cataractaction.ui.screen.profile.ProfileViewModel
+import com.cataractaction.ui.screen.GoogleViewModel
 import com.cataractaction.ui.screen.register.RegisterScreen
+import kotlinx.coroutines.launch
 
 @Composable
 fun CataractActionApp(
-    modifier: Modifier = Modifier, navHostController: NavHostController = rememberNavController()
+    modifier: Modifier = Modifier, navHostController: NavHostController = rememberNavController(),
+    viewModelProfile: ProfileViewModel = hiltViewModel(),
+    viewModelGoogle: GoogleViewModel = hiltViewModel()
 ) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val isKeyboardOpen by keyboardAsState() // t
+    val isKeyboardOpen by keyboardAsState()
+
+    val state by viewModelGoogle.state.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = Unit) {
+        if (viewModelProfile.getSignedInUser() != null) {
+            navHostController.popBackStack()
+            navHostController.navigate(Screen.Home.route) {
+                popUpTo(navHostController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = state.signInError) {
+        state.signInError?.let { error -> Toast.makeText(context, error, Toast.LENGTH_LONG).show() }
+    }
+
+    LaunchedEffect(key1 = state.isSignInSuccessful) {
+        if (state.isSignInSuccessful) {
+            Toast.makeText(context, "Sign in succesful", Toast.LENGTH_LONG).show()
+
+            navHostController.popBackStack()
+            navHostController.navigate(Screen.Home.route) {
+                popUpTo(navHostController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+            viewModelGoogle.resetState()
+        }
+    }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModelGoogle.viewModelScope.launch {
+                    val signInResult =
+                        viewModelGoogle.signInWithIntent(intent = result.data ?: return@launch)
+                    viewModelGoogle.onSignInResult(signInResult)
+                }
+            }
+        })
+
+    val onSignInClick = {
+        viewModelGoogle.viewModelScope.launch {
+            val signInIntentSender = viewModelGoogle.getGoogleAuth(context)
+            launcher.launch(
+                IntentSenderRequest.Builder(
+                    signInIntentSender ?: return@launch
+                ).build()
+            )
+        }
+    }
 
     Scaffold(
         bottomBar = {
@@ -55,87 +129,34 @@ fun CataractActionApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Pager.route) {
-                PagerScreen(navigateToRegister = {
-                    navHostController.popBackStack()
-                    navHostController.navigate(Screen.Register.route) {
-                        popUpTo(navHostController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                })
+                PagerScreen(navHostController)
             }
             composable(Screen.Login.route) {
-                LoginScreen(navigate = {
-                    navHostController.navigate(Screen.Register.route)
-                }, navigateToHome = {
-                    navHostController.popBackStack()
-                    navHostController.navigate(Screen.Home.route) {
-                        popUpTo(navHostController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                })
+                LoginScreen(navHostController) { onSignInClick() }
             }
             composable(Screen.Register.route) {
-                RegisterScreen(navigate = {
-                    navHostController.navigate(Screen.Login.route)
-                }, navigateToHome = {
-                    navHostController.popBackStack()
-                    navHostController.navigate(Screen.Home.route) {
-                        popUpTo(navHostController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                })
+                RegisterScreen(navHostController) { onSignInClick() }
             }
             composable(Screen.Home.route) {
-                HomeScreen(
-                    navigateToCheck = {
-                        navHostController.navigate(Screen.CataractCheck.route)
-                    },
-                    navigateToComing = {
-                        navHostController.navigate(Screen.Coming.route)
-                    },
-                    navigateToHistory = {
-                        navHostController.navigate(Screen.History.route)
-                    }
-                )
+                HomeScreen(navHostController)
             }
             composable(Screen.Article.route) {
-                ArticleScreen(navigateToComing = {
-                    navHostController.navigate(Screen.Coming.route)
-                })
+                ArticleScreen(navHostController)
             }
             composable(Screen.History.route) {
                 HistoryScreen()
             }
             composable(Screen.Profile.route) {
                 ProfileScreen(
-                    navigateToComing = {
-                        navHostController.navigate(Screen.Coming.route)
-                    },
-                    buttonLogout = {
-                        navHostController.navigate(Screen.Register.route) {
-                            popUpTo(Screen.Home.route) {
-                                inclusive = true
-                            }
-                        }
-                    }
+                    userData = viewModelProfile.getSignedInUser(),
+                    navHostController
                 )
             }
             composable(Screen.CataractCheck.route) {
                 CataractCheckScreen()
             }
             composable(Screen.Coming.route) {
-                ComingScreen(navigateBack = {
-                    navHostController.popBackStack()
-                })
+                ComingScreen(navHostController)
             }
         }
     }

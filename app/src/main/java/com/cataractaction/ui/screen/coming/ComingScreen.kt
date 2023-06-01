@@ -16,19 +16,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.cataractaction.R
 
 @Composable
-fun ComingScreen(navigateBack: () -> Unit) {
+fun ComingScreen(navHostController: NavHostController) {
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("coming_soon.json"))
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        IconButton(onClick = {navigateBack()}) {
+        IconButton(onClick = { navHostController.popBackStack()}) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.arrow_back),
                 contentDescription = "back",

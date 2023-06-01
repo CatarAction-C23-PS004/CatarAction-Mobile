@@ -12,15 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.cataractaction.ui.components.home.DashboardHome
 import com.cataractaction.ui.components.home.LogoNotif
 import com.cataractaction.ui.components.main.CardArticle
+import com.cataractaction.ui.navigation.Screen
 
 @Composable
 fun HomeScreen(
-    navigateToCheck: () -> Unit,
-    navigateToComing: () -> Unit,
-    navigateToHistory: () -> Unit
+    navHostController: NavHostController
 ) {
     val list = listOf(1, 2, 3, 4, 5, 6)
     Column(
@@ -28,9 +28,10 @@ fun HomeScreen(
             .fillMaxSize()
             .padding(horizontal = 27.dp)
     ) {
-        LogoNotif(navigateToComing)
+        LogoNotif { navHostController.navigate(Screen.Coming.route) }
         Spacer(Modifier.size(24.dp))
-        DashboardHome(navigateToCheck, navigateToHistory)
+        DashboardHome({ navHostController.navigate(Screen.CataractCheck.route) },
+            { navHostController.navigate(Screen.History.route) })
         Spacer(Modifier.size(30.dp))
         Text(
             text = "Recommended Article",
