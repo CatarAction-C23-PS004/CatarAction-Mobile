@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.cataractaction.R
 
 @Composable
-fun DashboardHome(navigateToCheck: () -> Unit, navigateToHistory: () -> Unit) {
+fun DashboardHome(navigateToCheck: () -> Unit, navigateToHistory: () -> Unit, name: String) {
     Row {
         Image(
             painter = painterResource(R.drawable.home_doctor),
@@ -50,7 +50,7 @@ fun DashboardHome(navigateToCheck: () -> Unit, navigateToHistory: () -> Unit) {
                     .padding(15.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Hi Cupa,\nWhat can we do for you?", color = Color.White)
+                Text(text = "Hi ${name},\nWhat can we do for you?", color = Color.White)
             }
             Spacer(Modifier.size(20.dp))
             OutlinedButton(
@@ -69,7 +69,7 @@ fun DashboardHome(navigateToCheck: () -> Unit, navigateToHistory: () -> Unit) {
             }
             Spacer(Modifier.size(8.dp))
             OutlinedButton(
-                onClick = {navigateToHistory()},
+                onClick = { navigateToHistory() },
                 shape = RoundedCornerShape(60.dp),
                 border = BorderStroke(1.dp, MaterialTheme.colors.primary),
                 colors = ButtonDefaults.buttonColors(

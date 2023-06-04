@@ -16,11 +16,15 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Newspaper
+import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import com.cataractaction.R
 
 data class IconName(val icon: ImageVector, val text: String)
 
@@ -30,7 +34,7 @@ fun ButtonProfile(category: String, button: () -> Unit) {
         "password" -> IconName(Icons.Filled.Lock, "Change Password")
         "language" -> IconName(Icons.Filled.Language, "Change Language")
         "contact" -> IconName(Icons.Filled.Contacts, "Contact Us")
-        "term" -> IconName(Icons.Filled.ArrowForward, "Terms and Conditions")
+        "term" -> IconName(ImageVector.vectorResource(R.drawable.terms), "Terms and Conditions")
         else -> IconName(Icons.Filled.Lock, "Change Password")
     }
 

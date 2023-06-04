@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.cataractaction.core.domain.model.UserData
 import com.cataractaction.ui.components.home.DashboardHome
 import com.cataractaction.ui.components.home.LogoNotif
 import com.cataractaction.ui.components.main.CardArticle
@@ -20,6 +21,7 @@ import com.cataractaction.ui.navigation.Screen
 
 @Composable
 fun HomeScreen(
+    userData: UserData?,
     navHostController: NavHostController
 ) {
     val list = listOf(1, 2, 3, 4, 5, 6)
@@ -30,8 +32,11 @@ fun HomeScreen(
     ) {
         LogoNotif { navHostController.navigate(Screen.Coming.route) }
         Spacer(Modifier.size(24.dp))
-        DashboardHome({ navHostController.navigate(Screen.CataractCheck.route) },
-            { navHostController.navigate(Screen.History.route) })
+        DashboardHome(
+            { navHostController.navigate(Screen.CataractCheck.route) },
+            { navHostController.navigate(Screen.History.route) },
+            name = userData?.username ?: "Not Found"
+        )
         Spacer(Modifier.size(30.dp))
         Text(
             text = "Recommended Article",

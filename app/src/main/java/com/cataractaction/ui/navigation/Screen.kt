@@ -1,5 +1,7 @@
 package com.cataractaction.ui.navigation
 
+import android.net.Uri
+
 sealed class Screen(val route: String) {
     object Pager : Screen("pager")
     object Login : Screen("login")
@@ -8,6 +10,9 @@ sealed class Screen(val route: String) {
     object Article : Screen("article")
     object History : Screen("history")
     object Profile : Screen("profile")
-    object CataractCheck : Screen("CataractCheck")
+    object CataractCheck : Screen("cataractCheck/{uriFile}"){
+        fun createRoute(uriFile: String?) = "cataractCheck/$uriFile"
+    }
     object Coming : Screen("coming")
+    object Camera : Screen("camera")
 }

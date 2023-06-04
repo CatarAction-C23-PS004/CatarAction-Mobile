@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -31,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.cataractaction.R
 
 @Composable
-fun ButtonImage() {
+fun ButtonImage(startGallery: () -> Unit, startCamera: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,7 +47,7 @@ fun ButtonImage() {
         val primaryColor = MaterialTheme.colors.primary
         Box(
             Modifier
-                .clickable { }
+                .clickable { startCamera() }
                 .drawBehind {
                     drawRoundRect(
                         color = primaryColor,
@@ -72,7 +73,7 @@ fun ButtonImage() {
         }
         Box(
             Modifier
-                .clickable { }
+                .clickable { startGallery() }
                 .drawBehind {
                     drawRoundRect(
                         color = primaryColor,
@@ -100,19 +101,20 @@ fun ButtonImage() {
 }
 
 @Composable
-fun ButtonDeleteImage(){
+fun ButtonDeleteImage(deleteImage: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 55.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(
-            imageVector = Icons.Filled.DeleteOutline,
-            contentDescription = "delete",
-            tint = MaterialTheme.colors.onError
-        )
-        Spacer(Modifier.size(10.dp))
+        IconButton(onClick = { deleteImage() }) {
+            Icon(
+                imageVector = Icons.Filled.DeleteOutline,
+                contentDescription = "delete",
+                tint = MaterialTheme.colors.onError
+            )
+        }
         Text(
             text = "Delete Image",
             style = MaterialTheme.typography.body1.copy(fontSize = 12.sp),
@@ -122,7 +124,7 @@ fun ButtonDeleteImage(){
 }
 
 @Composable
-fun ButtonLogout(){
+fun ButtonLogout() {
     Button(
         onClick = { /*TODO*/ }, modifier = Modifier
             .fillMaxWidth()
