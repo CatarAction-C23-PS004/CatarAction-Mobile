@@ -31,7 +31,7 @@ fun ArticleScreen(navHostController: NavHostController) {
             .padding(horizontal = 27.dp)
     ) {
         LogoTitleArticle { navHostController.navigate(Screen.Coming.route) }
-        Spacer(Modifier.size(20.dp))
+        Spacer(Modifier.size(15.dp))
         SearchField()
         Spacer(Modifier.size(21.dp))
         TextBar(pagerState)

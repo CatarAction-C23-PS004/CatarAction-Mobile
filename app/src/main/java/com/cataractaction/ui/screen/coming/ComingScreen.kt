@@ -19,17 +19,23 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.cataractaction.R
 
 @Composable
 fun ComingScreen(navHostController: NavHostController) {
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("coming_soon.json"))
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = LottieConstants.IterateForever
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        IconButton(onClick = { navHostController.popBackStack()}) {
+        IconButton(onClick = { navHostController.popBackStack() }) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.arrow_back),
                 contentDescription = "back",
@@ -40,6 +46,7 @@ fun ComingScreen(navHostController: NavHostController) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             LottieAnimation(
                 composition = composition,
+                progress = { progress },
                 modifier = Modifier
                     .width(250.dp)
                     .height(250.dp)

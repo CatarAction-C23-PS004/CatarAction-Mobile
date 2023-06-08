@@ -38,7 +38,7 @@ fun PagerScreen(navHostController: NavHostController) {
             .padding(23.dp)
             .fillMaxSize()
     ) {
-        LogoSkip(navigateToRegister)
+        LogoSkip(navigateToRegister, pagerState)
         ImagePager(pagerState)
         TextPager(pagerState)
         Spacer(Modifier.size(36.dp))

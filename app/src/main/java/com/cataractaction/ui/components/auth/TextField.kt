@@ -15,9 +15,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -31,8 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.cataractaction.R
 
 @Composable
-fun TextFieldName() {
-    var name by rememberSaveable { mutableStateOf("") }
+fun TextFieldName(state: MutableState<String>) {
 
     Text(
         text = stringResource(R.string.login_name),
@@ -40,8 +39,8 @@ fun TextFieldName() {
         modifier = Modifier.padding(bottom = 1.dp)
     )
     OutlinedTextField(
-        value = name,
-        onValueChange = { name = it },
+        value = state.value,
+        onValueChange = { state.value = it },
         label = {
             Text(
                 "Enter your name",
@@ -59,8 +58,7 @@ fun TextFieldName() {
 }
 
 @Composable
-fun TextFieldEmail() {
-    var email by rememberSaveable { mutableStateOf("") }
+fun TextFieldEmail(state: MutableState<String>) {
 
     Text(
         text = stringResource(R.string.auth_email),
@@ -68,12 +66,13 @@ fun TextFieldEmail() {
         modifier = Modifier.padding(bottom = 1.dp)
     )
     OutlinedTextField(
-        value = email,
-        onValueChange = { email = it },
+        value = state.value,
+        onValueChange = { state.value = it },
         label = {
             Text(
                 "Enter your email address",
-                style = MaterialTheme.typography.body1.copy(fontSize = 12.sp)
+                style = MaterialTheme.typography.body1.copy(fontSize = 12.sp),
+                maxLines = 1
             )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -82,13 +81,12 @@ fun TextFieldEmail() {
         shape = RoundedCornerShape(60.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 10.dp)
+            .heightIn(min = 10.dp),
     )
 }
 
 @Composable
-fun TextFieldPassword() {
-    var password by rememberSaveable { mutableStateOf("") }
+fun TextFieldPassword(state: MutableState<String>, register: Boolean) {
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     Text(
         text = stringResource(R.string.auth_password),
@@ -96,11 +94,11 @@ fun TextFieldPassword() {
         modifier = Modifier.padding(bottom = 1.dp)
     )
     OutlinedTextField(
-        value = password,
-        onValueChange = { password = it },
+        value = state.value,
+        onValueChange = { state.value = it },
         label = {
             Text(
-                "Enter your password min 8 characters",
+                if (register) "Enter your password min 6 characters" else "Enter your password",
                 style = MaterialTheme.typography.body1.copy(fontSize = 11.sp)
             )
         },

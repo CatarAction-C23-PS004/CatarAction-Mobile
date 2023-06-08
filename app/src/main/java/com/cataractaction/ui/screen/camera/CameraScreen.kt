@@ -1,12 +1,10 @@
 package com.cataractaction.ui.screen.camera
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
-import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
@@ -46,13 +44,12 @@ import com.cataractaction.R
 import com.cataractaction.ui.common.getCameraProvider
 import com.cataractaction.ui.common.rotateBitmap
 import com.cataractaction.ui.common.takePhoto
-import com.cataractaction.ui.common.uriToFile
 import com.cataractaction.ui.navigation.Screen
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 
-@RequiresApi(Build.VERSION_CODES.P)
+@SuppressLint("NewApi")
 @Composable
 fun CameraScreen(navHostController: NavHostController) {
     var lensFacing by remember { mutableStateOf(CameraSelector.LENS_FACING_BACK) }

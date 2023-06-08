@@ -2,22 +2,20 @@ package com.cataractaction
 
 import android.app.Activity
 import android.net.Uri
-import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -44,7 +42,7 @@ import com.cataractaction.ui.screen.profile.ProfileViewModel
 import com.cataractaction.ui.screen.register.RegisterScreen
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.P)
+
 @Composable
 fun CataractActionApp(
     modifier: Modifier = Modifier, navHostController: NavHostController = rememberNavController(),
@@ -57,6 +55,7 @@ fun CataractActionApp(
 
     val state by viewModelGoogle.state.collectAsState()
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = Unit) {
         if (viewModelProfile.getSignedInUser() != null) {
@@ -95,22 +94,32 @@ fun CataractActionApp(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
         onResult = { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                viewModelGoogle.viewModelScope.launch {
-                    val signInResult =
-                        viewModelGoogle.signInWithIntent(intent = result.data ?: return@launch)
-                    viewModelGoogle.onSignInResult(signInResult)
+                scope.launch {
+                    viewModelGoogle.googleWithIntent(intent = result.data ?: return@launch)
                 }
             }
         })
 
-    val onSignInClick = {
-        viewModelGoogle.viewModelScope.launch {
-            val signInIntentSender = viewModelGoogle.getGoogleAuth(context)
+    fun onGoogleClick() {
+        scope.launch {
+            val signInIntentSender = viewModelGoogle.setupIntentSender(context)
             launcher.launch(
                 IntentSenderRequest.Builder(
                     signInIntentSender ?: return@launch
                 ).build()
             )
+        }
+    }
+
+    fun onSignUpClick(email: String, password: String) {
+        scope.launch {
+            viewModelGoogle.signUpWithEmailAndPassword(email, password)
+        }
+    }
+
+    fun onSignInClick(email: String, password: String) {
+        scope.launch {
+            viewModelGoogle.signInWithEmailAndPassword(email, password)
         }
     }
 
@@ -139,10 +148,20 @@ fun CataractActionApp(
                 PagerScreen(navHostController)
             }
             composable(Screen.Login.route) {
-                LoginScreen(navHostController) { onSignInClick() }
+                LoginScreen(
+                    navHostController,
+                    { onGoogleClick() },
+                    { email, password -> onSignInClick(email, password) },
+                    state.isLoading
+                )
             }
             composable(Screen.Register.route) {
-                RegisterScreen(navHostController) { onSignInClick() }
+                RegisterScreen(
+                    navHostController,
+                    { onGoogleClick() },
+                    { email, password -> onSignUpClick(email, password) },
+                    state.isLoading
+                )
             }
             composable(Screen.Home.route) {
                 HomeScreen(userData = viewModelProfile.getSignedInUser(), navHostController)

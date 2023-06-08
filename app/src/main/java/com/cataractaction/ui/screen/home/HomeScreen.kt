@@ -35,7 +35,7 @@ fun HomeScreen(
         DashboardHome(
             { navHostController.navigate(Screen.CataractCheck.route) },
             { navHostController.navigate(Screen.History.route) },
-            name = userData?.username ?: "Not Found"
+            name = userData?.username ?: userData?.email.toString().split("@")[0]
         )
         Spacer(Modifier.size(30.dp))
         Text(

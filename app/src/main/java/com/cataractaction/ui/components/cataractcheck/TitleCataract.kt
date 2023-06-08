@@ -35,6 +35,6 @@ fun TitleCataract(navigateBack: () -> Unit) {
             )
         }
         Text(text = "Cataract Check", style = MaterialTheme.typography.h5)
-        Spacer(Modifier.size(0.dp))
+        IconButton(onClick = {}){}
     }
 }

@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -27,8 +29,13 @@ fun ImagePager(pagerState: PagerState) {
         modifier = Modifier.padding(bottom = 60.dp),
         state = pagerState,
         key = { list[it] }) { index ->
+        val progress by animateLottieCompositionAsState(
+            composition = listComposition[index],
+            iterations = LottieConstants.IterateForever
+        )
         LottieAnimation(
             composition = listComposition[index],
+            progress = { progress },
             modifier = Modifier
                 .width(200.dp)
                 .height(200.dp)

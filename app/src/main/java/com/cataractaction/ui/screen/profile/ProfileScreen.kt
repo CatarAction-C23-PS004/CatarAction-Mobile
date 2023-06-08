@@ -34,7 +34,7 @@ fun ProfileScreen(
     val navigateToComing = { navHostController.navigate(Screen.Coming.route) }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Spacer(Modifier.size(23.dp))
+        Spacer(Modifier.size(33.dp))
         Text(
             text = "Profile",
             style = MaterialTheme.typography.h5,
@@ -43,7 +43,10 @@ fun ProfileScreen(
         Spacer(Modifier.size(33.dp))
         PhotoProfile(navigateToComing, userData?.profilePictureUrl)
         Spacer(Modifier.size(10.dp))
-        NameProfile(userData?.username ?: "Not found", userData?.email ?: "Not found")
+        NameProfile(
+            userData?.username ?: userData?.email.toString().split("@")[0],
+            userData?.email ?: "Not found"
+        )
         Spacer(Modifier.size(40.dp))
         ButtonProfile("password", navigateToComing)
         Spacer(Modifier.size(15.dp))

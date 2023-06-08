@@ -1,5 +1,6 @@
 package com.cataractaction.ui.screen.login
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,7 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -23,34 +28,41 @@ import com.cataractaction.ui.components.auth.TextTitle
 import com.cataractaction.ui.navigation.Screen
 
 @Composable
-fun LoginScreen(navHostController: NavHostController, onSignInClick: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        LogoTitle()
-        Column(modifier = Modifier.padding(horizontal = 40.dp)) {
-            TextTitle(false)
-            TextFieldEmail()
-            Spacer(Modifier.size(14.dp))
-            TextFieldPassword()
-            Spacer(Modifier.size(30.dp))
-            ButtonAuth(false) {
-                navHostController.popBackStack()
-                navHostController.navigate(Screen.Home.route) {
-                    popUpTo(navHostController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
+fun LoginScreen(
+    navHostController: NavHostController,
+    onSignInClick: () -> Unit,
+    onSignUpClick: (email: String, password: String) -> Unit,
+    loading: Boolean?
+) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+
+            val email = rememberSaveable { mutableStateOf("") }
+            val password = rememberSaveable { mutableStateOf("") }
+
+            LogoTitle()
+            Column(modifier = Modifier.padding(horizontal = 40.dp)) {
+                TextTitle(false)
+                TextFieldEmail(email)
+                Spacer(Modifier.size(14.dp))
+                TextFieldPassword(password, false)
+                Spacer(Modifier.size(30.dp))
+                ButtonAuth(false) {
+                    onSignUpClick(email.value, password.value)
                 }
+                DividerAuth()
+                ButtonAuthGoogle(false) { onSignInClick() }
+                Spacer(Modifier.size(5.dp))
+                TextAuth(false) { navHostController.navigate(Screen.Register.route) }
+                Spacer(Modifier.size(25.dp))
             }
-            DividerAuth()
-            ButtonAuthGoogle(false) { onSignInClick() }
-            Spacer(Modifier.size(5.dp))
-            TextAuth(false) { navHostController.navigate(Screen.Register.route) }
-            Spacer(Modifier.size(25.dp))
+        }
+        if (loading == true) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
 }

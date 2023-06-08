@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.google.android.play.integrity.internal.x
 
 @Composable
 fun LogoTitleArticle(navigateToComing: () -> Unit) {
@@ -26,7 +28,7 @@ fun LogoTitleArticle(navigateToComing: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Spacer(Modifier.size(0.dp))
+        IconButton(onClick = {}) {}
         Text(text = "Article", style = MaterialTheme.typography.h5)
         IconButton(onClick = { navigateToComing()}) {
             Icon(

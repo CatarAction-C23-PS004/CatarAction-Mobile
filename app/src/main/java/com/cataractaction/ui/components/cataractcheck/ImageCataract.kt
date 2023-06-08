@@ -18,11 +18,17 @@ import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
 fun ImageCataract(uri: Uri?) {
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("upload.json"))
+    val progress by animateLottieCompositionAsState(
+        composition =composition,
+        iterations = LottieConstants.IterateForever
+    )
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         if (uri != null) {
             Image(
@@ -37,6 +43,7 @@ fun ImageCataract(uri: Uri?) {
         } else {
             LottieAnimation(
                 composition = composition,
+                progress = {progress},
                 modifier = Modifier
                     .width(250.dp)
                     .height(250.dp)
