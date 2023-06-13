@@ -11,7 +11,8 @@ private val DarkColorScheme = darkColors(
     primaryVariant = GreyLight,
     secondary = Grey,
     secondaryVariant = GreyDark,
-    onError = RedDark
+    onError = RedDark,
+    onSecondary = GreenDark
 )
 
 private val LightColorScheme = lightColors(
@@ -19,7 +20,9 @@ private val LightColorScheme = lightColors(
     primaryVariant = GreyLight,
     secondary = Grey,
     secondaryVariant = GreyDark,
-    onError = RedDark
+    onError = RedDark,
+    onSecondary = GreenDark
+
 
 
     /* Other default colors to override

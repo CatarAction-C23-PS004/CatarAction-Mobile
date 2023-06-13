@@ -124,14 +124,14 @@ fun ButtonDeleteImage(deleteImage: () -> Unit) {
 }
 
 @Composable
-fun ButtonLogout() {
+fun ButtonHistory(onClick: () -> Unit) {
     Button(
-        onClick = { /*TODO*/ }, modifier = Modifier
+        onClick = { onClick() }, modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 40.dp), shape = RoundedCornerShape(60.dp)
     ) {
         Text(
-            text = "Upload Image",
+            text = "Save to History",
             style = MaterialTheme.typography.body2,
             modifier = Modifier.padding(5.dp)
         )

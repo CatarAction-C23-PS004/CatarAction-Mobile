@@ -1,7 +1,7 @@
 package com.cataractaction.core.di
 
 import android.content.Context
-import com.cataractaction.core.data.AuthGoogleRepository
+import com.cataractaction.core.data.repository.AuthGoogleRepository
 import com.cataractaction.core.domain.repository.IAuthGoogleRepository
 import com.cataractaction.core.domain.usecase.AuthGoogleInteractor
 import com.cataractaction.core.domain.usecase.AuthGoogleUseCase

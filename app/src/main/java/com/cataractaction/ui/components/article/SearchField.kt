@@ -16,10 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SearchField() {
+fun SearchField(
+    query: String,
+    onQueryChange: (String) -> Unit,
+) {
     OutlinedTextField(
-        value = "",
-        onValueChange = {},
+        value = query,
+        onValueChange = onQueryChange,
         label = {
             Text(
                 "Search article",

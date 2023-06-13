@@ -1,11 +1,13 @@
 package com.cataractaction.ui.components.history
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
@@ -22,9 +24,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CardHistory() {
+fun CardHistory(
+    date: String,
+    result: String,
+    onCheckCataract: () -> Unit,
+    onCataractResult: () -> Unit
+) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onCataractResult() },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -40,34 +49,37 @@ fun CardHistory() {
             )
             Spacer(Modifier.size(6.dp))
             Text(
-                text = "11 May, 20:19",
+                text = date,
                 style = MaterialTheme.typography.body1.copy(fontSize = 10.sp)
             )
         }
         Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = "Cataract",
+                text = result,
                 style = MaterialTheme.typography.body1.copy(fontSize = 12.sp),
-                color = MaterialTheme.colors.onError
+                color = if (result == "Cataract") MaterialTheme.colors.onError else MaterialTheme.colors.onSecondary
             )
             Spacer(Modifier.size(5.dp))
-            OutlinedButton(
-                onClick = {},
-                shape = RoundedCornerShape(60.dp),
-                border = BorderStroke(1.dp, MaterialTheme.colors.primary),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White
-                )
-            ) {
-                Text(
-                    text = "Recheck",
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.primary,
-                    textAlign = TextAlign.Center
-                )
+            if (result == "Cataract") {
+                OutlinedButton(
+                    onClick = { onCheckCataract() },
+                    shape = RoundedCornerShape(60.dp),
+                    border = BorderStroke(1.dp, MaterialTheme.colors.primary),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.White
+                    )
+                ) {
+                    Text(
+                        text = "Recheck",
+                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colors.primary,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            } else {
+                Spacer(Modifier.size(0.dp))
             }
         }
     }

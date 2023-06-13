@@ -35,6 +35,27 @@ fun TitleCataract(navigateBack: () -> Unit) {
             )
         }
         Text(text = "Cataract Check", style = MaterialTheme.typography.h5)
-        IconButton(onClick = {}){}
+        IconButton(onClick = {}) {}
+    }
+}
+
+@Composable
+fun TitleCataractResult(navigateBack: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = { navigateBack() }) {
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.arrow_back),
+                contentDescription = "back",
+                tint = MaterialTheme.colors.primary
+            )
+        }
+        Text(text = "Cataract Result", style = MaterialTheme.typography.h5)
+        IconButton(onClick = {}) {}
     }
 }

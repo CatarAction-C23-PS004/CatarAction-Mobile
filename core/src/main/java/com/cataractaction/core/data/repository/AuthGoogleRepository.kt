@@ -1,11 +1,11 @@
-package com.cataractaction.core.data
+package com.cataractaction.core.data.repository
 
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import com.cataractaction.core.R
-import com.cataractaction.core.domain.model.Resource
-import com.cataractaction.core.domain.model.UserData
+import com.cataractaction.core.data.Resource
+import com.cataractaction.core.domain.model.AuthGoogleUserData
 import com.cataractaction.core.domain.repository.IAuthGoogleRepository
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
@@ -90,8 +90,8 @@ class AuthGoogleRepository @Inject constructor(
         }
     }
 
-    override fun getSignedInUser(): UserData? = auth.currentUser?.run {
-        UserData(
+    override fun getSignedInUser(): AuthGoogleUserData? = auth.currentUser?.run {
+        AuthGoogleUserData(
             userId = uid,
             username = displayName,
             email = email,

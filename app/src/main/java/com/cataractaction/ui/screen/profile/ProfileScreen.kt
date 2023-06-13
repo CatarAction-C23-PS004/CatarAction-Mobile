@@ -8,6 +8,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.cataractaction.core.domain.model.UserData
+import com.cataractaction.core.domain.model.AuthGoogleUserData
 import com.cataractaction.ui.components.profile.ButtonLogout
 import com.cataractaction.ui.components.profile.ButtonProfile
 import com.cataractaction.ui.components.profile.NameProfile
@@ -25,13 +30,22 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(
-    userData: UserData?,
+    userData: AuthGoogleUserData?,
     navHostController: NavHostController,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
 
     val context = LocalContext.current
     val navigateToComing = { navHostController.navigate(Screen.Coming.route) }
+
+    var name by remember { mutableStateOf(userData?.username ?: "") }
+
+    LaunchedEffect(key1 = name) {
+        if (name.isEmpty()) {
+            name = userData?.email.toString().split("@")[0]
+        }
+    }
+
 
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(Modifier.size(33.dp))
@@ -44,7 +58,7 @@ fun ProfileScreen(
         PhotoProfile(navigateToComing, userData?.profilePictureUrl)
         Spacer(Modifier.size(10.dp))
         NameProfile(
-            userData?.username ?: userData?.email.toString().split("@")[0],
+            name,
             userData?.email ?: "Not found"
         )
         Spacer(Modifier.size(40.dp))

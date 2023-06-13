@@ -3,7 +3,11 @@ package com.cataractaction.ui.screen.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.cataractaction.MainActivity
 import kotlinx.coroutines.delay

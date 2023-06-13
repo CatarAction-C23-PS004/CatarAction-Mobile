@@ -3,8 +3,8 @@ package com.cataractaction.core.domain.repository
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import com.cataractaction.core.domain.model.Resource
-import com.cataractaction.core.domain.model.UserData
+import com.cataractaction.core.data.Resource
+import com.cataractaction.core.domain.model.AuthGoogleUserData
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +21,7 @@ interface IAuthGoogleRepository {
 
     suspend fun signOut()
 
-    fun getSignedInUser(): UserData?
+    fun getSignedInUser(): AuthGoogleUserData?
 
     fun buildSignInRequest(context: Context): BeginSignInRequest
 }
