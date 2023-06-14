@@ -74,7 +74,7 @@ Android Studio
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Capstone-Bangkit/Rifsa-Mobile
+   git clone https://github.com/CatarAction-C23-PS004/CatarAction-Mobile
    ```
 2. Build the apps
    ```sh
